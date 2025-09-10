@@ -2,16 +2,16 @@
 
 API_URL="https://student-info-api.netlify.app/.netlify/functions/submit_student_info"
 
-
+#Help from ChatGPT for some reason it kept giving me an error for section but they offered the soltuion of clean() and nonempty()
 clean() { printf '%s' "$1" | tr -d '\r' | sed -E 's/^[[:space:]]+|[[:space:]]+$//g'; }
 nonempty() { [ -n "$2" ] || { echo "Error: $1 cannot be empty."; exit 1; }; }
 
 
-read -p "UCID (initials+number, e.g., fv123): " id_number
+read -p "UCID: " id_number
 read -p "First Name: " first_name
 read -p "Last Name: " last_name
 read -p "GitHub Username: " github_username
-read -p "Discord Username (searchable with @): " discord_username
+read -p "Discord Username: " discord_username
 read -p "Favorite Cartoon: " favorite_cartoon
 read -p "Favorite Programming Language: " program_language
 read -p "Favorite Movie/Game/Book: " favorite_item
@@ -38,24 +38,22 @@ nonempty "Favorite Programming Language" "$program_language"
 nonempty "Favorite Movie/Game/Book" "$favorite_item"
 nonempty "Section" "$section"
 
-# UCID: initials+number (soft check; warns but continues)
 if ! [[ "$id_number" =~ ^[A-Za-z]{2,}[0-9]+$ ]]; then
-  echo "Warning: UCID doesn't look like initials+number (e.g., fv123)."
+  echo "Warning: UCID doesn't look like right."
 fi
 
-# Section must be accepted by the API
 case "$section" in
   101|103) ;;
   *) echo 'Error: Section must be 101 or 103.'; exit 1 ;;
 esac
 
-# Optional: warn if GitHub user doesn't exist (doesn't block submit)
+# Help from ChatGPT github was pretty hard to make sure there were no errors
 gh_code=$(curl -s -o /dev/null -w "%{http_code}" "https://api.github.com/users/$github_username")
 if [ "$gh_code" != "200" ]; then
   echo "Warning: GitHub user '$github_username' not found (make sure your repo has this script)."
 fi
 
-
+#delete to make sure there are no duplicates
 curl -sS -G -X DELETE "$API_URL" \
   --data-urlencode "UCID=$id_number" \
   --data-urlencode "section=$section" >/dev/null
