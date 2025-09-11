@@ -1,0 +1,5 @@
+alice@example.com
+bob@example.com
+charlie@company.org
+david@school.edu
+alice@example.com  # Duplicate email

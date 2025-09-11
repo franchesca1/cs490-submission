@@ -1,0 +1,4 @@
+7:    printf("Enter your name: ");
+10:    printf("Hello, %s!\n", name);
+12:    printf("Enter a number: ");
+15:    printf("You entered: %d\n", num);

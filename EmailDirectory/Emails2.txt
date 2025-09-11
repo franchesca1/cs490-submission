@@ -1,0 +1,4 @@
+eve@business.net
+frank@startup.io
+grace@nonprofit.org
+eve@business.net  # Duplicate email

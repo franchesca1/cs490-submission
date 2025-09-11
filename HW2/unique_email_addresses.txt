@@ -1,0 +1,10 @@
+alice@example.com
+bob@example.com
+charlie@company.org
+david@school.edu
+eve@business.net
+frank@startup.io
+grace@nonprofit.org
+harry@enterprise.com
+isabel@tech.co
+john@industry.biz
